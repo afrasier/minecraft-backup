@@ -1,3 +1,7 @@
+# Fork
+The purpose of this fork is the alter the script to function with minecraft servers that are based in a docker container
+The installation instructions, license, etc. have been left as is
+
 # Minecraft Backup
 Backup script for Linux servers running a Minecraft server in a GNU Screen or tmux
 
@@ -20,7 +24,7 @@ Please refer to the LICENSE (MIT License) for the full legal disclaimer.
 - Minecraft server (tested with Vanilla 1.10.2 only)
 
 ## Installation
-1. Download the script: `$ wget https://raw.githubusercontent.com/nicolaschan/minecraft-backup/master/backup.sh`
+1. Download the script: `$ wget https://raw.githubusercontent.com/nicolaschan/minecraft-backup/master/backup.sh` 
 2. Mark as executable: `$ chmod +x backup.sh`
 3. Use the command line options or configure default values at the top of `backup.sh`:
 

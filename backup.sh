@@ -8,7 +8,7 @@
 # For most convenience, run automatically with cron.
 
 # Default Configuration 
-SCREEN_NAME="" # Name of the GNU Screen or tmux pane your Minecraft server is running in
+SCREEN_NAME="" # This is now used instead as the docker container name
 SERVER_WORLD="" # Server world directory
 BACKUP_DIRECTORY="" # Directory to save backups in
 MAX_BACKUPS=128 # -1 indicates unlimited
@@ -20,7 +20,7 @@ ENABLE_CHAT_MESSAGES=false # Tell players in Minecraft chat about backup status
 PREFIX="Backup" # Shows in the chat message
 DEBUG=false # Enable debug messages
 SUPPRESS_WARNINGS=false # Suppress warnings
-WINDOW_MANAGER="screen" # Choices: screen, tmux
+WINDOW_MANAGER="docker"
 
 # Other Variables (do not modify)
 DATE_FORMAT="%F_%H-%M-%S"
@@ -73,7 +73,7 @@ log-warning () {
 # Check for missing encouraged arguments
 if ! $SUPPRESS_WARNINGS; then
   if [[ $SCREEN_NAME == "" ]]; then
-    log-warning "Minecraft screen name not specified (use -s)"
+    log-warning "Minecraft container name not specified (use -s)"
   fi
 fi
 # Check for required arguments
@@ -104,6 +104,8 @@ execute-command () {
   local COMMAND=$1
   if [[ $SCREEN_NAME != "" ]]; then
     case $WINDOW_MANAGER in
+      "docker") docker exec $SCREEN_NAME rcon-cli $COMMAND
+        ;;
       "screen") screen -S $SCREEN_NAME -p 0 -X stuff "$COMMAND$(printf \\r)"
         ;;
       "tmux") tmux send-keys -t $SCREEN_NAME "$COMMAND" ENTER
